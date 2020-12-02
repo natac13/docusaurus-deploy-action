@@ -1,6 +1,9 @@
 FROM node:15.3
 
-LABEL version="1.0.0"
+LABEL "version"="1.0.0"
+LABEL "repository"="https://github.com/natac13/docusaurus-deploy-action"
+LABEL "homepage"="https://github.com/natac13/docusaurus-deploy-action"
+LABEL "maintainer"="Sean Campbell <sean.campbell13@gmail.com>"
 
 EXPOSE 3000
 
