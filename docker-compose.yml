@@ -1,0 +1,31 @@
+version: '2.4'
+
+services:
+  gh-action:
+    image: gh-action
+    build:
+      context: .
+    volumes:
+      - ~/JavaScript/Projects/CertGround-Website:/website
+      - ~/.aws:/home/node/.aws
+    user: node
+    ports:
+      - 3000:3000
+    restart: on-failure
+    networks:
+      - frontend
+    environment:
+      GITHUB_WORKSPACE: '/website'
+      AWS_STACK_NAME: 'CertGround-Main-Website-Host'
+      AWS_REGION: 'us-east-1'
+  #   environment:
+  #     NODE_ENV: development
+  #     DYNAMODB_DEV_ENDPOINT: 'http://dynamodb:8000'
+  #     BACKEND_DLQ: 'http://sqs:9324/queue/CertGround-DEMO-Backend-Dead-Letter-Queue'
+  #     EMAIL_SEND_QUEUE: 'http://sqs:9324/queue/CertGround-DEMO-Email-Send-Queue'
+  #     MONGO_URI: 'mongodb://mongo1:27017,mongo2:27018,mongo3:27019/ibew120?authSource=admin'
+  #     SQS_OFFLINE_ENDPOINT: 'http://sqs:9324'
+  #   # restart: unless-stopped
+
+networks:
+  frontend:

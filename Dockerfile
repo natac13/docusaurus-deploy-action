@@ -1,8 +1,18 @@
-# Container image that runs your code
-FROM alpine:3.10
+FROM node:15.3
 
-# Copies your code file from your action repository to the filesystem path `/` of the container
-COPY entrypoint.sh /entrypoint.sh
+LABEL version="1.0.0"
 
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
+EXPOSE 3000
+
+RUN apt-get update && \
+  apt-get install \
+  curl \
+  git
+
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+  unzip awscliv2.zip && \
+  ./aws/install && \
+  mkdir /website
+
+ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
