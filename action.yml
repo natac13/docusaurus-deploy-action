@@ -1,16 +1,38 @@
-# action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'S3 Github Deploy Action'
+description: 'Deploy a static website to AWS S3 and invalidate CloudFront distribution'
+author: 'natac13'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  folder:
+    description: 'Relative Directory to Deploy'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: './build'
+  bucket:
+    description: 'Name of the S3 Bucket'
+    required: true
+  region:
+    description: 'AWS Region of the S3 Bucket'
+    required: true
+    default: 'us-east-1'
+  distributionId:
+    description: 'CloudFront distribution ID'
+    required: false
+  invalidatePath:
+    description: 'Path to invalidate'
+    required: false
+    default: '/*'
+  deleteFiles:
+    description: 'Whether to delete files in S3 that are not present in local directory when synced'
+    required: false
+  cache_control:
+    description: 'Cache Control arg for S3 sync'
+    required: false
+  acl:
+    description: 'S3 Acl arg'
+    required: false
+    default: 'private'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.who-to-greet }}
+  using: docker
+  image: Dockerfile
+branding:
+  icon: refresh-cw
+  color: green
